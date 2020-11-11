@@ -1,6 +1,6 @@
 # InterpretabilityMethods
 
-This R-packages facilitates the use of interpretability methods for black-box machine learning models. 
+This repository facilitates the use of interpretability methods for black-box machine learning models. 
 
 
 The package can be installed using the devtools-package:
