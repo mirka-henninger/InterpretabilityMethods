@@ -20,4 +20,4 @@ Dries Debeer, Torsten Hothorn and Carolin Strobl (2020). permimp: Conditional Pe
 
 Molnar, C. (2019). Interpretable Machine Learning: A Guide for Making Black Box Models Explainable. https://christophm.github.io/interpretable-ml-book
 
-Molnar C, Bischl B, Casalicchio G (2018). “iml: An R package for Interpretable Machine Learning.” _JOSS_, *3*(26), 786. https://doi.org/10.21105/joss.00786
+Molnar C, Bischl B, Casalicchio G (2018). “iml: An R package for Interpretable Machine Learning.” _JOSS_, 3, 1-2. https://doi.org/10.21105/joss.00786
