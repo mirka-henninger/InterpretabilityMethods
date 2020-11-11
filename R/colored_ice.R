@@ -1,0 +1,60 @@
+#' Plot colored ICE curves
+#'
+#' This function allows to plot colored ice predictions for a set of features, colored by a covariate
+#'
+#' @param pred A prediction object from package iml
+#' @param features A character vector containing the names of the features for which the plot should be created
+#' @param covar A character string indicating the covariate after which the ICE curves should be colored
+#' @param title An optional character string indicating the title of the plot
+#' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
+#' @param nCol An optional numeric entry indicating the number of columns when plots are created for several features
+#' @param legend_title A character indicating the legend title. Default is the name of 'covar'
+#' @param legend_position Logical indicating whether the legend should be shown. Default is TRUE
+#'
+#' @return a plot of type ggplotify
+#'
+#' @export
+colored_ice <- function(pred, features, covar, title = "",
+                        center = FALSE, nCol = NA,
+                        legend_title = covar, legend_position = "right"){
+  dat <- pred$data$X
+  names(dat) <- paste0(colnames(dat),"_")
+  covarName <- paste0(covar,"_")
+  dat$id <- row.names(dat)
+  emptyPlot <- ggplot2::ggplot()
+  listPlot <- list(emptyPlot)
+  for (nfeat in 1:length(features)){
+    # build plot dat
+    tempPlot <- iml::FeatureEffect$new(pred, feature = features[nfeat], method = "ice")
+    if(center == TRUE){
+      tempPlot <- iml::FeatureEffect$new(pred, feature = features[nfeat], method = "ice",
+                                         center = min(pred$data$X[[features[nfeat]]]))
+    }
+    plotDat <- tempPlot$results
+    names(plotDat) <- c(features[nfeat], "yhat","type","id")
+    plotDat$id <- as.character(plotDat$id)
+
+    # merge X dat with plot dat
+    plotDat <- dplyr::left_join(plotDat, dat, by = "id")
+    plotDat$id <- as.factor(plotDat$id)
+
+    # plot
+    tempPlot <- ggplot2::ggplot(plotDat, aes(x=.data[[features[nfeat]]], y=.data$yhat,
+                                             group = id, color = .data[[covarName]])) +
+      geom_line() +
+      theme_bw() +
+      xlab(features[nfeat]) +
+      ylab("")
+    tempPlot <- tempPlot + guides(color=guide_legend(title=legend_title, position = legend_position))
+
+    listPlot[[nfeat]] <- tempPlot
+  }
+  namesPlots <- paste0("tempPlot_",1:length(features))
+  if(is.na(nCol)){
+    nCol <- ceiling(length(features)/2)
+  }
+  plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
+  plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title) + ylab(ylab)
+  return(plotting)
+}
+

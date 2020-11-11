@@ -1,0 +1,25 @@
+Package: InterpretabilityMethods
+Title: Facilitates the implementation of interpretability methods for social science research
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Mirka",
+           family = "Henninger",
+           role = c("aut", "cre"),
+           email = "mail@mimrka-henninger.de",
+           comment = c(ORCID = "0000-0003-4676-2361"))
+Description: Facilitates the implementation of interpretability methods for social science researchers. The packages uses functions for interpretability methods from the packages 'iml' and 'permimp'. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Depends:
+    R (>= 3.6.0)
+Imports: 
+    dplyr,
+    ggplot2,
+    ggplotify,
+    viridis,
+    iml,
+    permimp,
+    rlang
