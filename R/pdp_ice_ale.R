@@ -73,7 +73,7 @@ pdp_ice_ale <- function(pred,
   if(is.na(nCol)){
     nCol <- ceiling(length(features)/2)
   }
-  plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
+  plotting <- do.call("gridExtra::grid.arrange", c(listPlot, ncol=nCol))
   plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title)
   return(plotting)
 }

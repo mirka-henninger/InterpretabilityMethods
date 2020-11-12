@@ -40,7 +40,7 @@ colored_ice <- function(pred, features, covar, title = "",
 
     # plot
     tempPlot <- ggplot2::ggplot(plotDat, aes(x=.data[[features[nfeat]]], y=.data$yhat,
-                                             group = id, color = .data[[covarName]])) +
+                                             group = .data$id, color = .data[[covarName]])) +
       geom_line() +
       theme_bw() +
       xlab(features[nfeat]) +
@@ -53,7 +53,7 @@ colored_ice <- function(pred, features, covar, title = "",
   if(is.na(nCol)){
     nCol <- ceiling(length(features)/2)
   }
-  plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
+  plotting <- do.call("gridExtra::grid.arrange", c(listPlot, ncol=nCol))
   plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title) + ylab(ylab)
   return(plotting)
 }
