@@ -44,8 +44,9 @@ colored_ice <- function(pred, features, covar, title = "",
       geom_line() +
       theme_bw() +
       xlab(features[nfeat]) +
-      ylab("")
-    tempPlot <- tempPlot + guides(color=guide_legend(title=legend_title, position = legend_position))
+      ylab("") +
+      theme(legend.position = legend_position)
+    tempPlot <- tempPlot + guides(color=guide_legend(title=legend_title))
 
     listPlot[[nfeat]] <- tempPlot
   }
@@ -53,7 +54,7 @@ colored_ice <- function(pred, features, covar, title = "",
   if(is.na(nCol)){
     nCol <- ceiling(length(features)/2)
   }
-  plotting <- do.call("gridExtra::grid.arrange", c(listPlot, ncol=nCol))
+  plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
   plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title) + ylab(ylab)
   return(plotting)
 }
