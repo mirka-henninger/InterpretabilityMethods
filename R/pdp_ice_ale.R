@@ -67,6 +67,9 @@ pdp_ice_ale <- function(pred,
     if(!is.na(xlabel)){
       tempPlot <- tempPlot + xlab(xlabel)
     }
+    if (!all(is.na(limits))){
+      tempPlot <- tempPlot + ylim(limits)
+    }
     listPlot[[nfeat]] <- tempPlot
   }
   namesPlots <- paste0("tempPlot_",1:length(features))
