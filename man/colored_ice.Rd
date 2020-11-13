@@ -9,6 +9,7 @@ colored_ice(
   features,
   covar,
   title = "",
+  xlabel = features,
   center = FALSE,
   nCol = NA,
   legend_title = covar,
@@ -24,6 +25,8 @@ colored_ice(
 
 \item{title}{An optional character string indicating the title of the plot}
 
+\item{xlabel}{An optional character string of the same length as the number of features indicating the x-axis label of the single plots}
+
 \item{center}{Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE}
 
 \item{nCol}{An optional numeric entry indicating the number of columns when plots are created for several features}
@@ -37,4 +40,20 @@ a plot of type ggplotify
 }
 \description{
 This function allows to plot colored ice predictions for a set of features, colored by a covariate
+}
+\examples{
+N <- 1000
+x1 <- runif(N, -1, 1)
+x2 <- runif(N, -1.2, 1.2)
+z <- runif(N, -2, 2)
+y <- 5 + x1 * x2 * z + rnorm(N,0,.5^2)
+dat <- data.frame(x1, x2, z, y)
+
+rfmod <- randomForest::randomForest(y~., dat)
+pred <- iml::Predictor$new(rfmod)
+
+colored_ice(pred, features = c("x1","x2"), covar = "z",
+            title = "Colored ICE curves", xlabel = c("X1","X2"),
+            legend_title = "Z", legend_position = "right")
+
 }

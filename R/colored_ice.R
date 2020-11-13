@@ -6,6 +6,7 @@
 #' @param features A character vector containing the names of the features for which the plot should be created
 #' @param covar A character string indicating the covariate after which the ICE curves should be colored
 #' @param title An optional character string indicating the title of the plot
+#' @param xlabel An optional character string of the same length as the number of features indicating the x-axis label of the single plots
 #' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
 #' @param nCol An optional numeric entry indicating the number of columns when plots are created for several features
 #' @param legend_title A character indicating the legend title. Default is the name of 'covar'
@@ -13,8 +14,23 @@
 #'
 #' @return a plot of type ggplotify
 #'
+#' @examples
+#' N <- 1000
+#' x1 <- runif(N, -1, 1)
+#' x2 <- runif(N, -1.2, 1.2)
+#' z <- runif(N, -2, 2)
+#' y <- 5 + x1 * x2 * z + rnorm(N,0,.5^2)
+#' dat <- data.frame(x1, x2, z, y)
+#'
+#' rfmod <- randomForest::randomForest(y~., dat)
+#' pred <- iml::Predictor$new(rfmod)
+#'
+#' colored_ice(pred, features = c("x1","x2"), covar = "z",
+#'             title = "Colored ICE curves", xlabel = c("X1","X2"),
+#'             legend_title = "Z", legend_position = "right")
+#'
 #' @export
-colored_ice <- function(pred, features, covar, title = "",
+colored_ice <- function(pred, features, covar, title = "", xlabel = features,
                         center = FALSE, nCol = NA,
                         legend_title = covar, legend_position = "right"){
   dat <- pred$data$X
@@ -43,10 +59,11 @@ colored_ice <- function(pred, features, covar, title = "",
                                              group = .data$id, color = .data[[covarName]])) +
       geom_line() +
       theme_bw() +
-      xlab(features[nfeat]) +
+      xlab(xlabel[nfeat]) +
       ylab("") +
       theme(legend.position = legend_position)
-    tempPlot <- tempPlot + guides(color=guide_legend(title=legend_title))
+    tempPlot <- tempPlot + guides(color = guide_legend(title = legend_title,
+                                                       override.aes = list(size = 7)))
 
     listPlot[[nfeat]] <- tempPlot
   }
