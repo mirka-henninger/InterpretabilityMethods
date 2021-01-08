@@ -1,6 +1,6 @@
 # InterpretabilityMethods
 
-This repository facilitates the use of interpretability methods for black-box machine learning models. Most of the functions are wrapper functions based on the R package *iml* and *permimp*. 
+This repository facilitates the use of interpretation methods for black-box machine learning models. Most of the functions are wrapper functions based on the R package *iml* and *permimp*. 
 
 
 It can be installed like an R package using the devtools-package:
@@ -8,8 +8,8 @@ It can be installed like an R package using the devtools-package:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("mirka-henninger/InterpretabilityMethods")
-library(InterpretabilityMethods)
+devtools::install_github("mirka-henninger/InterpretationMethods")
+library(InterpretationMethods)
 ```
 
 References

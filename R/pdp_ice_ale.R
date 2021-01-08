@@ -48,12 +48,14 @@ pdp_ice_ale <- function(pred,
       plotDat <- plotDat[plotDat$.id %in% samp,]
       tempPlot <- ggplot(plotDat, aes(x = .data[[feature]], y = .data$.value,
                                       group = .data$.id, size = .data$.type, color = .data$.type)) +
+        geom_point() +
         geom_line(alpha = alpha) +
         scale_color_manual(values = c("black", "gold")) +
         scale_size_manual(values = c(.5,2))
     }
     if(method != "ice" & method != "pdp+ice"){
       tempPlot <- ggplot(plotDat, aes(x = .data[[feature]], y = .data$.value)) +
+        geom_point() +
         geom_line(alpha = alpha)
     }
     # plot
