@@ -30,8 +30,8 @@ twoD_pdp_ale <- function(pred,
                                       method = method)
   plot_2D <- plot(plotDat, show.data = show_data) + ggtitle(title) +
     viridis::scale_fill_viridis(limits = limits) +
-    scale_x_continuous(name = xlabel) +
-    scale_y_continuous(name = ylabel) +
+    xlab(xlabel) +
+    ylab(ylabel) +
     labs(fill= method) +
     theme(legend.position = legend_position)
   return(plot_2D)
