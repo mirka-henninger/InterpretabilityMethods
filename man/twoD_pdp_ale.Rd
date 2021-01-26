@@ -13,7 +13,8 @@ twoD_pdp_ale(
   ylabel = features[2],
   limits = c(NA, NA),
   show_data = FALSE,
-  legend_position = "right"
+  legend_position = "right",
+  rugs = TRUE
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ twoD_pdp_ale(
 \item{show_data}{Logical indicating whether datapoints should be plotted. Default is FALSE}
 
 \item{legend_position}{Logical indicating whether the legend should be shown. Default is TRUE}
+
+\item{rugs}{Logical indicating whether rugs should be shown. Default is TRUE}
 }
 \value{
 a plot of type ggplotify

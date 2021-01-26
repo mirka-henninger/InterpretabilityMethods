@@ -22,4 +22,5 @@ Imports:
     gridExtra,
     viridis,
     iml,
-    permimp
+    permimp,
+    rlang

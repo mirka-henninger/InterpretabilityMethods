@@ -41,19 +41,3 @@ a plot of type ggplotify
 \description{
 This function allows to plot colored ice predictions for a set of features, colored by a covariate
 }
-\examples{
-N <- 1000
-x1 <- runif(N, -1, 1)
-x2 <- runif(N, -1.2, 1.2)
-z <- runif(N, -2, 2)
-y <- 5 + x1 * x2 * z + rnorm(N,0,.5^2)
-dat <- data.frame(x1, x2, z, y)
-
-rfmod <- randomForest::randomForest(y~., dat)
-pred <- iml::Predictor$new(rfmod)
-
-colored_ice(pred, features = c("x1","x2"), covar = "z",
-            title = "Colored ICE curves", xlabel = c("X1","X2"),
-            legend_title = "Z", legend_position = "right")
-
-}

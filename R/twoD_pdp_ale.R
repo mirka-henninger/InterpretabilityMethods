@@ -11,6 +11,7 @@
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
 #' @param show_data Logical indicating whether datapoints should be plotted. Default is FALSE
 #' @param legend_position Logical indicating whether the legend should be shown. Default is TRUE
+#' @param rugs Logical indicating whether rugs should be shown. Default is TRUE
 #'
 #' @return a plot of type ggplotify
 #'
@@ -23,15 +24,38 @@ twoD_pdp_ale <- function(pred,
                          ylabel = features[2],
                          limits = c(NA,NA),
                          show_data = FALSE,
-                         legend_position = "right"){
+                         legend_position = "right",
+                         rugs = TRUE){
   if (length(features) != 2) stop("Please indicate the names of two features")
   plotDat  <- iml::FeatureEffect$new(pred = pred,
-                                      feature = features,
-                                      method = method)
-  plot_2D <- plot(plotDat, show.data = show_data) + ggtitle(title) +
+                                     feature = features,
+                                     method = method)$results
+  if(method == "pdp"){
+    plot_2D <- ggplot() +
+      geom_raster(data = plotDat, aes(.data[[features[1]]], .data[[features[2]]], fill = .data$.value))
+  }
+  if(method == "ale"){
+    plot_2D <- ggplot() +
+      geom_rect(data = plotDat, aes(xmin = .data$.left, xmax = .data$.right, ymin = .data$.bottom, ymax = .data$.top, fill = .data$.ale))
+  }
+  if(rugs == TRUE){
+    plot_2D <- plot_2D +
+      geom_rug(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+               inherit.aes = F)
+  }
+  if(show_data == TRUE){
+    plot_2D <-
+      plot_2D +
+      geom_point(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+                 shape = 1, size = .2,
+                 inherit.aes = F)
+  }
+  plot_2D <-
+    plot_2D +
+    theme_minimal() +
+    xlab(xlabel)+
+    ylab(ylabel)+
     viridis::scale_fill_viridis(limits = limits) +
-    xlab(xlabel) +
-    ylab(ylabel) +
     labs(fill= method) +
     theme(legend.position = legend_position)
   return(plot_2D)
