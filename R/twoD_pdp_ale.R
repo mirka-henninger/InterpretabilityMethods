@@ -1,6 +1,8 @@
 #' Plot two-dimensional pdp, ice, ale
 #'
-#' This function allows to plot 2-dimensional pdp, ice, ale figures
+#' This function allows to plot 2-dimensional pdp, ale figures.
+#' Please note ale for two categorical features is not yet implemented, and that the categorical feature
+#' must be placed on the x-axis.
 #'
 #' @param pred A prediction object from package iml
 #' @param features A character vector containing the names of two features for which the plot should be created
@@ -32,11 +34,21 @@ twoD_pdp_ale <- function(pred,
                                      method = method)$results
   if(method == "pdp"){
     plot_2D <- ggplot() +
-      geom_raster(data = plotDat, aes(.data[[features[1]]], .data[[features[2]]], fill = .data$.value))
+      geom_raster(data = plotDat, aes(.data[[features[1]]],
+                                      .data[[features[2]]],
+                                      fill = .data$.value))
   }
   if(method == "ale"){
     plot_2D <- ggplot() +
-      geom_rect(data = plotDat, aes(xmin = .data$.left, xmax = .data$.right, ymin = .data$.bottom, ymax = .data$.top, fill = .data$.ale))
+      geom_rect(data = plotDat, aes(xmin = .data$.left,
+                                    xmax = .data$.right,
+                                    ymin = .data$.bottom,
+                                    ymax = .data$.top,
+                                    fill = .data$.ale))
+    if(is.factor(pred$data$get.x()[[features[1]]])){
+      plot_2D <- plot_2D +
+        scale_x_continuous(breaks = 1:length(levels(pred$data$get.x()[[features[1]]])), labels = levels(pred$data$get.x()[[features[1]]]))
+    }
   }
   if(rugs == TRUE){
     plot_2D <- plot_2D +

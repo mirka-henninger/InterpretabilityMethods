@@ -42,5 +42,7 @@ twoD_pdp_ale(
 a plot of type ggplotify
 }
 \description{
-This function allows to plot 2-dimensional pdp, ice, ale figures
+This function allows to plot 2-dimensional pdp, ale figures.
+Please note ale for two categorical features is not yet implemented, and that the categorical feature
+must be placed on the x-axis.
 }
