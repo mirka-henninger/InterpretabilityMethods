@@ -69,7 +69,8 @@ twoD_pdp_ale <- function(pred,
     ylab(ylabel)+
     viridis::scale_fill_viridis(limits = limits) +
     labs(fill= method) +
-    theme(legend.position = legend_position)
+    theme(legend.position = legend_position) +
+    ggtitle(title)
   return(plot_2D)
 }
 
