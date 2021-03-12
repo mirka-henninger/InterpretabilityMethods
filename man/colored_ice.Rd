@@ -11,6 +11,7 @@ colored_ice(
   title = "",
   xlabel = features,
   center = FALSE,
+  limits = c(NA, NA),
   nCol = NA,
   legend_title = covar,
   legend_position = "right"
@@ -28,6 +29,8 @@ colored_ice(
 \item{xlabel}{An optional character string of the same length as the number of features indicating the x-axis label of the single plots}
 
 \item{center}{Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE}
+
+\item{limits}{An optional two-entry vector indicating the limits of the y-axis}
 
 \item{nCol}{An optional numeric entry indicating the number of columns when plots are created for several features}
 

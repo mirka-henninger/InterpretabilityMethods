@@ -8,6 +8,7 @@
 #' @param title An optional character string indicating the title of the plot
 #' @param xlabel An optional character string of the same length as the number of features indicating the x-axis label of the single plots
 #' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
+#' @param limits An optional two-entry vector indicating the limits of the y-axis
 #' @param nCol An optional numeric entry indicating the number of columns when plots are created for several features
 #' @param legend_title A character indicating the legend title. Default is the name of 'covar'
 #' @param legend_position Logical indicating whether the legend should be shown. Default is TRUE
@@ -16,7 +17,8 @@
 #'
 #' @export
 colored_ice <- function(pred, features, covar, title = "", xlabel = features,
-                        center = FALSE, nCol = NA,
+                        center = FALSE,
+                        limits = c(NA,NA), nCol = NA,
                         legend_title = covar, legend_position = "right"){
   dat <- pred$data$X
   names(dat) <- paste0(colnames(dat),"_")
@@ -30,6 +32,9 @@ colored_ice <- function(pred, features, covar, title = "", xlabel = features,
     if(center == TRUE){
       tempPlot <- iml::FeatureEffect$new(pred, feature = features[nfeat], method = "ice",
                                          center = min(pred$data$X[[features[nfeat]]]))
+    }
+    if (!all(is.na(limits))){
+      tempPlot <- tempPlot + ylim(limits)
     }
     plotDat <- tempPlot$results
     names(plotDat) <- c(features[nfeat], "yhat","type","id")
