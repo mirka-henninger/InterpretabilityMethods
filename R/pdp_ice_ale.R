@@ -8,8 +8,8 @@
 #' @param features A character vector containing the names of the features for which the plot should be created
 #' @param method A character string indicating the method to be applied: either "pdp", "pdp+ice", "ice", or "ale"
 #' @param title An optional character string indicating the title of the plot
-#' @param xlabel An optional character string indicating x-axis label (same for all panels)
-#' @param ylabel  An optional character string indicating y-axis label (same for all panels)
+#' @param xlabel An optional character string indicating x-axis label
+#' @param ylabel  An optional character string indicating y-axis label
 #' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
 #' @param nCol An optional numeric entry indicating the number of columns when plots are created for several features
@@ -46,15 +46,21 @@ pdp_ice_ale <- function(pred,
     if(method == "ice" | method == "pdp+ice"){
       samp <- c(sample(1:nrow(plotDat), nrow(plotDat) * sample_prop, replace = FALSE), NA)
       plotDat <- plotDat[plotDat$.id %in% samp,]
-      tempPlot <- ggplot(plotDat, aes(x = .data[[feature]], y = .data$.value,
-                                      group = .data$.id, size = .data$.type, color = .data$.type)) +
+      tempPlot <- ggplot(plotDat,
+                         aes(x = .data[[feature]],
+                             y = .data$.value,
+                             group = .data$.id,
+                             size = .data$.type,
+                             color = .data$.type)) +
         geom_point() +
         geom_line(alpha = alpha) +
         scale_color_manual(values = c("black", "gold")) +
         scale_size_manual(values = c(.5,2))
     }
     if(method != "ice" & method != "pdp+ice"){
-      tempPlot <- ggplot(plotDat, aes(x = .data[[feature]], y = .data$.value)) +
+      tempPlot <- ggplot(plotDat,
+                         aes(x = .data[[feature]],
+                             y = .data$.value)) +
         geom_point() +
         geom_line(alpha = alpha)
     }
@@ -64,7 +70,8 @@ pdp_ice_ale <- function(pred,
     tempPlot <- tempPlot +
       theme_bw() +
       theme(axis.title.y = element_blank()) +
-      xlab(feature) + ylab(ylabel) +
+      xlab(xlabel[nfeat]) +
+      ylab(ylabel[nfeat]) +
       theme(legend.position = "none")
     if(!is.na(xlabel)){
       tempPlot <- tempPlot + xlab(xlabel)

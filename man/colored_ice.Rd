@@ -13,6 +13,8 @@ colored_ice(
   center = FALSE,
   limits = c(NA, NA),
   nCol = NA,
+  colors = NULL,
+  alpha = 1,
   legend_title = covar,
   legend_position = "right"
 )
@@ -33,6 +35,10 @@ colored_ice(
 \item{limits}{An optional two-entry vector indicating the limits of the y-axis}
 
 \item{nCol}{An optional numeric entry indicating the number of columns when plots are created for several features}
+
+\item{colors}{An optional vector with entries for each level of 'covar'}
+
+\item{alpha}{An optional numeric entry indicating the alpha-level of ICE curves}
 
 \item{legend_title}{A character indicating the legend title. Default is the name of 'covar'}
 

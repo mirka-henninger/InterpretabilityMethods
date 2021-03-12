@@ -27,9 +27,9 @@ pdp_ice_ale(
 
 \item{title}{An optional character string indicating the title of the plot}
 
-\item{xlabel}{An optional character string indicating x-axis label (same for all panels)}
+\item{xlabel}{An optional character string indicating x-axis label}
 
-\item{ylabel}{An optional character string indicating y-axis label (same for all panels)}
+\item{ylabel}{An optional character string indicating y-axis label}
 
 \item{center}{Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE}
 
