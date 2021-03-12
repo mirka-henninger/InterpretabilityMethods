@@ -1,4 +1,4 @@
-# InterpretabilityMethods
+# InterpretationMethods
 
 This repository facilitates the use of interpretation methods for black-box machine learning models. Most of the functions are wrapper functions based on the R package *iml* and *permimp*. 
 
