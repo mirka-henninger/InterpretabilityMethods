@@ -33,9 +33,7 @@ colored_ice <- function(pred, features, covar, title = "", xlabel = features,
       tempPlot <- iml::FeatureEffect$new(pred, feature = features[nfeat], method = "ice",
                                          center = min(pred$data$X[[features[nfeat]]]))
     }
-    if (!all(is.na(limits))){
-      tempPlot <- tempPlot + ylim(limits)
-    }
+
     plotDat <- tempPlot$results
     names(plotDat) <- c(features[nfeat], "yhat","type","id")
     plotDat$id <- as.character(plotDat$id)
@@ -54,6 +52,9 @@ colored_ice <- function(pred, features, covar, title = "", xlabel = features,
       theme(legend.position = legend_position)
     tempPlot <- tempPlot + guides(color = guide_legend(title = legend_title,
                                                        override.aes = list(size = 7)))
+    if (!all(is.na(limits))){
+      tempPlot <- tempPlot + ylim(limits)
+    }
 
     listPlot[[nfeat]] <- tempPlot
   }
