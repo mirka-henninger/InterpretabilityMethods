@@ -20,21 +20,21 @@ colored_pdp <- function(pred, feature, covar, title = "", xlabel = feature,
   emptyPlot <- ggplot2::ggplot()
   listPlot <- list(emptyPlot)
   # build plot dat
-  tempPlot <- iml::FeatureEffect$new(pred, feature = c(feature, covar), method = method)
+  tempPlot <- iml::FeatureEffect$new(pred, feature = c(feature, covar), method = "pdp")
   plotDat <- tempPlot$results
-  
+
   # plot
   tempPlot <- ggplot2::ggplot(plotDat, aes(x=.data[[feature]], y=.data$.value,
                                            color = .data[[covar]])) +
-    geom_line() 
+    geom_line()
   plotting <- tempPlot +
     theme_bw() +
     xlab(xlabel) +
     ylab("") +
-    theme(legend.position = legend_position) + 
+    theme(legend.position = legend_position) +
     guides(color = guide_legend(title = legend_title,
-                                override.aes = list(size = 7)))+ 
-    ggtitle(title) + 
+                                override.aes = list(size = 7)))+
+    ggtitle(title) +
     ylab(ylab)
   return(plotting)
 }

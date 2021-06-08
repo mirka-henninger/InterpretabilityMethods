@@ -59,7 +59,7 @@ colored_ice <- function(pred,
                                     y=.data$yhat,
                                     group = .data$id,
                                     color = .data[[covarName]])) +
-      geom_point(alpha = alpha) +
+      # geom_point(alpha = alpha) +
       geom_line(alpha = alpha) +
       theme_bw() +
       xlab(xlabel[nfeat]) +

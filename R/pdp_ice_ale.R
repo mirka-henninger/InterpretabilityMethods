@@ -29,8 +29,8 @@ pdp_ice_ale <- function(pred,
                         center = FALSE,
                         limits = c(NA,NA),
                         nCol = NA,
-                        alpha = 1,
-                        sample_prop = 1){
+                        alpha = .5,
+                        sample_prop = .5){
   emptyPlot <- ggplot()
   listPlot <- list(emptyPlot)
   for (nfeat in 1:length(features)){
@@ -52,9 +52,10 @@ pdp_ice_ale <- function(pred,
                              group = .data$.id,
                              size = .data$.type,
                              color = .data$.type)) +
-        geom_point() +
-        geom_line(alpha = alpha) +
-        scale_color_manual(values = c("black", "gold")) +
+        # geom_point() +
+        geom_line() +
+        scale_color_manual(values = c("#344037", "gold")) +
+        scale_alpha_manual(values = c(alpha, 1)) +
         scale_size_manual(values = c(.5,2))
     }
     if(method != "ice" & method != "pdp+ice"){
