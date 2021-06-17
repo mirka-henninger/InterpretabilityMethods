@@ -8,8 +8,8 @@ colored_ice(
   pred,
   features,
   covar,
-  title = "",
   xlabel = features,
+  ylabel = "",
   center = FALSE,
   limits = c(NA, NA),
   nCol = NA,
@@ -26,9 +26,9 @@ colored_ice(
 
 \item{covar}{A character string indicating the covariate after which the ICE curves should be colored}
 
-\item{title}{An optional character string indicating the title of the plot}
-
 \item{xlabel}{An optional character string of the same length as the number of features indicating the x-axis label of the single plots}
+
+\item{ylabel}{An optional character string indicating y-axis label (same for all panels)}
 
 \item{center}{Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE}
 
@@ -49,4 +49,18 @@ a plot of type ggplotify
 }
 \description{
 This function allows to plot colored ice predictions for a set of features, colored by a covariate
+}
+\examples{
+\dontrun{
+N <- 1000
+x1 <- runif(N, -1, 1)
+x2 <- runif(N, -1, 1)
+y <- 5 + 5 * x1 * x2 + rnorm(N,1)
+dat <- data.frame(x1,x2,y)
+rfmod <- randomForest::randomForest(y~., dat)
+pred <- iml::Predictor$new(rfmod)
+colored_ice(pred, features = "x1", covar = "x2")
+colored_ice(pred, features = "x1", covar = "x2", center = TRUE)
+}
+
 }

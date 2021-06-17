@@ -17,6 +17,19 @@
 #'
 #' @return a plot of type ggplotify
 #'
+#' @examples
+#' \dontrun{
+#' N <- 1000
+#' x1 <- runif(N, -1, 1)
+#' x2 <- runif(N, -1, 1)
+#' y <- 5 + 5 * x1 * x2 + rnorm(N,1)
+#' dat <- data.frame(x1,x2,y)
+#' rfmod <- randomForest::randomForest(y~., dat)
+#' pred <- iml::Predictor$new(rfmod)
+#' (twoD_pdPlot <- twoD_pdp_ale(pred, features = c("x1", "x2"), method = "pdp"))
+#' (twoD_alePlot <- twoD_pdp_ale(pred, features = c("x1", "x2"), method = "ale"))
+#'}
+#'
 #' @export
 twoD_pdp_ale <- function(pred,
                          features,

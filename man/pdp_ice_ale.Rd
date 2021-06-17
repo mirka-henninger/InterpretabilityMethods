@@ -8,14 +8,13 @@ pdp_ice_ale(
   pred,
   features,
   method,
-  title = "",
-  xlabel = NA,
-  ylabel = "",
+  xlabel = features,
+  ylabel = method,
   center = FALSE,
   limits = c(NA, NA),
   nCol = NA,
-  alpha = 1,
-  sample_prop = 1
+  alpha = 0.5,
+  sample_prop = 0.5
 )
 }
 \arguments{
@@ -25,9 +24,7 @@ pdp_ice_ale(
 
 \item{method}{A character string indicating the method to be applied: either "pdp", "pdp+ice", "ice", or "ale"}
 
-\item{title}{An optional character string indicating the title of the plot}
-
-\item{xlabel}{An optional character string indicating x-axis label}
+\item{xlabel}{An optional character vector indicating x-axis label}
 
 \item{ylabel}{An optional character string indicating y-axis label}
 
@@ -48,4 +45,19 @@ a plot of type ggplotify
 This function allows to create PD, ICE, ALE plots
 ICE plots can be centered at the minimum
 Plots for several features of one model can be created at the same time
+}
+\examples{
+\dontrun{
+N <- 1000
+x1 <- runif(N, -1, 1)
+x2 <- runif(N, -1, 1)
+y <- 5 + 2 * x1 + x2 + rnorm(N,1)
+dat <- data.frame(x1,x2,y)
+rfmod <- randomForest::randomForest(y~., dat)
+pred <- iml::Predictor$new(rfmod)
+pdp <- pdp_ice_ale(pred,  "x1", method = "pdp")
+ice <- pdp_ice_ale(pred,  "x1", method = "ice")
+ale <- pdp_ice_ale(pred,  c("x1", "x2"), method = "ale", ylabel = "ALE")
+}
+
 }

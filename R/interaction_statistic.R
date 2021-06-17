@@ -11,6 +11,20 @@
 #' @param ylabel  An optional character string indicating y-axis label
 #' @return a plot of type ggplot
 #'
+#'@examples
+#' \dontrun{
+#' N <- 1000
+#' x1 <- runif(N, -1, 1)
+#' x2 <- runif(N, -1, 1)
+#' x3 <- runif(N, -1, 1)
+#' y <- 5 + 5 * x1 * x2 + x3 + rnorm(N,1)
+#' dat <- data.frame(x1,x2,x3,y)
+#' rfmod <- randomForest::randomForest(y~., dat)
+#' pred <- iml::Predictor$new(rfmod)
+#' interaction_statistic(pred)
+#' interaction_statistic(pred, type = "2way", feature = "x1")
+#'}
+#'
 #' @export
 interaction_statistic <- function(pred,
                                   type = "overall",

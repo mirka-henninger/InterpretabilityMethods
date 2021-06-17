@@ -7,8 +7,7 @@
 #' @param pred A prediction object from package iml
 #' @param features A character vector containing the names of the features for which the plot should be created
 #' @param method A character string indicating the method to be applied: either "pdp", "pdp+ice", "ice", or "ale"
-#' @param title An optional character string indicating the title of the plot
-#' @param xlabel An optional character string indicating x-axis label
+#' @param xlabel An optional character vector indicating x-axis label
 #' @param ylabel  An optional character string indicating y-axis label
 #' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
@@ -18,14 +17,27 @@
 #'
 #' @return a plot of type ggplotify
 #'
+#' @examples
+#' \dontrun{
+#' N <- 1000
+#' x1 <- runif(N, -1, 1)
+#' x2 <- runif(N, -1, 1)
+#' y <- 5 + 2 * x1 + x2 + rnorm(N,1)
+#' dat <- data.frame(x1,x2,y)
+#' rfmod <- randomForest::randomForest(y~., dat)
+#' pred <- iml::Predictor$new(rfmod)
+#' pdp <- pdp_ice_ale(pred,  "x1", method = "pdp")
+#' ice <- pdp_ice_ale(pred,  "x1", method = "ice")
+#' ale <- pdp_ice_ale(pred,  c("x1", "x2"), method = "ale", ylabel = "ALE")
+#'}
+#'
 #' @export
 #'
 pdp_ice_ale <- function(pred,
                         features,
                         method,
-                        title = "",
-                        xlabel = NA,
-                        ylabel = "",
+                        xlabel = features,
+                        ylabel = method,
                         center = FALSE,
                         limits = c(NA,NA),
                         nCol = NA,
@@ -70,12 +82,11 @@ pdp_ice_ale <- function(pred,
     # add titles, labels
     tempPlot <- tempPlot +
       theme_bw() +
-      theme(axis.title.y = element_blank()) +
       xlab(xlabel[nfeat]) +
-      ylab(ylabel[nfeat]) +
+      ylab(ylabel) +
       theme(legend.position = "none")
-    if(!is.na(xlabel)){
-      tempPlot <- tempPlot + xlab(xlabel)
+    if(!all(is.na(xlabel))){
+      tempPlot <- tempPlot + xlab(xlabel[nfeat])
     }
     if (!all(is.na(limits))){
       tempPlot <- tempPlot + ylim(limits)
@@ -87,7 +98,7 @@ pdp_ice_ale <- function(pred,
     nCol <- ceiling(length(features)/2)
   }
   plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
-  plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title)
+  plotting <- ggplotify::as.ggplot(plotting)
   return(plotting)
 }
 

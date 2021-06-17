@@ -7,9 +7,8 @@
 permutation_importance(
   object,
   type,
-  title = "",
   xlabel = "",
-  ylabel = "Permutation Importance",
+  ylabel = type,
   limits = c(NA, NA)
 )
 }
@@ -17,8 +16,6 @@ permutation_importance(
 \item{object}{A prediction object from package iml for model-based permutation importance or an object as returned by randomForest or cforest}
 
 \item{type}{A character indicating the type of variable importance: model, randomforest, or conditional}
-
-\item{title}{An optional character string indicating the title of the plot}
 
 \item{xlabel}{An optional character string indicating the x-axis label}
 
@@ -32,4 +29,20 @@ a plot of type ggplot
 \description{
 This function allows to plot permutation importance based on mean squared error.
 Three types are implemented: model-based permutation importance, random forest permutation importnance or conditional random forest variable importance
+}
+\examples{
+\dontrun{
+N <- 1000
+x1 <- runif(N, -1, 1)
+x2 <- runif(N, -1, 1)
+x3 <- x2 + runif(N, -1, 1)
+y <- 5 + 5 * x1 + 5 * x2 + 0 * x3 + rnorm(N,1)
+dat <- data.frame(x1,x2,x3,y)
+rfmod <- randomForest::randomForest(y~., dat)
+pred <- iml::Predictor$new(rfmod)
+permutation_importance(pred, type = "model-agnostic", limits = c(0,18))
+permutation_importance(rfmod, type = "randomforest", limits = c(0,18))
+permutation_importance(rfmod, type = "conditional", limits = c(0,18))
+}
+
 }

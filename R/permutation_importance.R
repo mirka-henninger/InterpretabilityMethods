@@ -5,19 +5,37 @@
 #'
 #' @param object A prediction object from package iml for model-based permutation importance or an object as returned by randomForest or cforest
 #' @param type A character indicating the type of variable importance: model, randomforest, or conditional
-#' @param title An optional character string indicating the title of the plot
 #' @param xlabel An optional character string indicating the x-axis label
 #' @param ylabel An optional character string indicating the y-axis label
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
 #'
 #' @return a plot of type ggplot
 #'
+#' @examples
+#' \dontrun{
+#' N <- 1000
+#' x1 <- runif(N, -1, 1)
+#' x2 <- runif(N, -1, 1)
+#' x3 <- x2 + runif(N, -1, 1)
+#' y <- 5 + 5 * x1 + 5 * x2 + 0 * x3 + rnorm(N,1)
+#' dat <- data.frame(x1,x2,x3,y)
+#' rfmod <- randomForest::randomForest(y~., dat)
+#' pred <- iml::Predictor$new(rfmod)
+#' permutation_importance(pred, type = "model-agnostic", limits = c(0,18))
+#' permutation_importance(rfmod, type = "randomforest", limits = c(0,18))
+#' permutation_importance(rfmod, type = "conditional", limits = c(0,18))
+#'}
+#'
 #' @export
-permutation_importance <- function(object, type, title = "",  xlabel = "", ylabel = "Permutation Importance", limits = c(NA,NA)){
-  if(!type %in% c("model", "randomforest", "conditional")){
+permutation_importance <- function(object,
+                                   type,
+                                   xlabel = "",
+                                   ylabel = type,
+                                   limits = c(NA,NA)){
+  if(!type %in% c("model-agnostic", "randomforest", "conditional")){
     stop("Please specify the type of permutation importance!", show.error.messages = TRUE)
   }
-  if(type == "model"){
+  if(type == "model-agnostic"){
     temp <- iml::FeatureImp$new(object, loss = "mse", compare = "difference")$results
   }
   if(type == "randomforest"){
@@ -33,8 +51,8 @@ permutation_importance <- function(object, type, title = "",  xlabel = "", ylabe
                           y = .data$importance)) +
     geom_point() +
     theme_bw() +
-    ggtitle(title) +
     xlab(xlabel) +
-    ylab(ylabel)
+    ylab(ylabel) +
+    ylim(limits)
   return(featPlot)
 }

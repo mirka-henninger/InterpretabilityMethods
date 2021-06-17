@@ -8,8 +8,8 @@ colored_pdp(
   pred,
   feature,
   covar,
-  title = "",
   xlabel = feature,
+  ylabel = "",
   legend_title = covar,
   legend_position = "right"
 )
@@ -21,9 +21,9 @@ colored_pdp(
 
 \item{covar}{A character string indicating the covariate after which the ICE curves should be colored}
 
-\item{title}{An optional character string indicating the title of the plot}
-
 \item{xlabel}{An optional character string of the same length as the number of feature indicating the x-axis label of the single plots}
+
+\item{ylabel}{An optional character string indicating y-axis label (same for all panels)}
 
 \item{legend_title}{A character indicating the legend title. Default is the name of 'covar'}
 
@@ -34,4 +34,18 @@ a plot of type ggplotify
 }
 \description{
 This function allows to plot colored pd predictions for one feature, colored by a covariate
+}
+\examples{
+\dontrun{
+N <- 1000
+x1 <- sample(0:1, N, replace = TRUE)
+x2 <- runif(N, -1, 1)
+y <- 5 + 5 * x1 * x2 + rnorm(N,1)
+x1 <- factor(x1)
+dat <- data.frame(x1,x2,y)
+rfmod <- randomForest::randomForest(y~., dat)
+pred <- iml::Predictor$new(rfmod)
+colored_pdp(pred, feature = "x2", covar = "x1")
+}
+
 }

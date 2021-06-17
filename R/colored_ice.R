@@ -5,8 +5,8 @@
 #' @param pred A prediction object from package iml
 #' @param features A character vector containing the names of the features for which the plot should be created
 #' @param covar A character string indicating the covariate after which the ICE curves should be colored
-#' @param title An optional character string indicating the title of the plot
 #' @param xlabel An optional character string of the same length as the number of features indicating the x-axis label of the single plots
+#' @param ylabel  An optional character string indicating y-axis label (same for all panels)
 #' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
 #' @param colors An optional vector with entries for each level of 'covar'
@@ -17,12 +17,25 @@
 #'
 #' @return a plot of type ggplotify
 #'
+#'@examples
+#' \dontrun{
+#' N <- 1000
+#' x1 <- runif(N, -1, 1)
+#' x2 <- runif(N, -1, 1)
+#' y <- 5 + 5 * x1 * x2 + rnorm(N,1)
+#' dat <- data.frame(x1,x2,y)
+#' rfmod <- randomForest::randomForest(y~., dat)
+#' pred <- iml::Predictor$new(rfmod)
+#' colored_ice(pred, features = "x1", covar = "x2")
+#' colored_ice(pred, features = "x1", covar = "x2", center = TRUE)
+#'}
+#'
 #' @export
 colored_ice <- function(pred,
                         features,
                         covar,
-                        title = "",
                         xlabel = features,
+                        ylabel = "",
                         center = FALSE,
                         limits = c(NA,NA),
                         nCol = NA,
@@ -63,7 +76,7 @@ colored_ice <- function(pred,
       geom_line(alpha = alpha) +
       theme_bw() +
       xlab(xlabel[nfeat]) +
-      ylab("") +
+      ylab(ylabel) +
       theme(legend.position = legend_position)
     if(!is.null(colors)){
       tempPlot <- tempPlot + scale_color_manual(values = colors)
@@ -82,7 +95,7 @@ colored_ice <- function(pred,
     nCol <- ceiling(length(features)/2)
   }
   plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
-  plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title)
+  plotting <- ggplotify::as.ggplot(plotting)
   return(plotting)
 }
 
