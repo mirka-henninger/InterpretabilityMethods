@@ -12,6 +12,16 @@ devtools::install_github("mirka-henninger/InterpretationMethods")
 library(InterpretationMethods)
 ```
 
+It uses mostly the functionality of the iml (https://github.com/christophM/iml) and permimp (https://github.com/ddebeer/permimp) package. However, it faciliates the use of the functions and customization of plots for interpretation methods. 
+
+- PD, ICE, ALE plots (```pdp_ice_ale```)
+- two dimensional PD and ALE plots (```twoD_pdp_ale```)
+- colored and centered PD plots (```colored_pdp```)
+- colored and centered ICE plots (```colored_ice```)
+- permutation importance (```permutation_importance```): model-agnostic, random forest, and conditional permutation importance
+- interaction statistic (```interaction_statistic```)
+
+
 References
 ----------
 Debeer, D., & Strobl, C. (2020). Conditional permutation importance revisited. BMC Bioinformatics, 21, 1–30. https://doi.org/10.1186/s12859-020-03622-2
