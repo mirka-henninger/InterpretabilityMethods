@@ -48,8 +48,8 @@ interaction_statistic <- function(pred,
     geom_point()+
     theme_bw() +
     ylim(limits)+
-    ggtitle(title) +
+    xlab(xlabel) +
     ylab(ylabel) +
-    xlab(xlabel)
+    ggtitle(title)
   return(featPlot)
 }

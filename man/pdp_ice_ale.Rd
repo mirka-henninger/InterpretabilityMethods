@@ -10,6 +10,7 @@ pdp_ice_ale(
   method,
   xlabel = features,
   ylabel = method,
+  title = "",
   center = FALSE,
   limits = c(NA, NA),
   nCol = NA,
@@ -27,6 +28,8 @@ pdp_ice_ale(
 \item{xlabel}{An optional character vector indicating x-axis label}
 
 \item{ylabel}{An optional character string indicating y-axis label}
+
+\item{title}{An optional character string indicating the title of the plot}
 
 \item{center}{Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE}
 

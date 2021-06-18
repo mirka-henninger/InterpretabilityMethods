@@ -10,6 +10,7 @@ colored_ice(
   covar,
   xlabel = features,
   ylabel = "",
+  title = "",
   center = FALSE,
   limits = c(NA, NA),
   nCol = NA,
@@ -29,6 +30,8 @@ colored_ice(
 \item{xlabel}{An optional character string of the same length as the number of features indicating the x-axis label of the single plots}
 
 \item{ylabel}{An optional character string indicating y-axis label (same for all panels)}
+
+\item{title}{An optional character string indicating the title of the plot}
 
 \item{center}{Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE}
 

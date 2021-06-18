@@ -7,6 +7,7 @@
 #' @param covar A character string indicating the covariate after which the ICE curves should be colored
 #' @param xlabel An optional character string of the same length as the number of feature indicating the x-axis label of the single plots
 #' @param ylabel  An optional character string indicating y-axis label (same for all panels)
+#' @param title An optional character string indicating the title of the plot
 #' @param legend_title A character indicating the legend title. Default is the name of 'covar'
 #' @param legend_position Logical indicating whether the legend should be shown. Default is TRUE
 #'
@@ -30,6 +31,7 @@ colored_pdp <- function(pred,
                         covar,
                         xlabel = feature,
                         ylabel = "",
+                        title = "",
                         legend_title = covar,
                         legend_position = "right"){
   dat <- pred$data$X
@@ -51,7 +53,8 @@ colored_pdp <- function(pred,
     theme(legend.position = legend_position) +
     guides(color = guide_legend(title = legend_title,
                                 override.aes = list(size = 7)))+
-    ylab(ylabel)
+    ylab(ylabel) +
+    ggtitle(title)
   return(plotting)
 }
 

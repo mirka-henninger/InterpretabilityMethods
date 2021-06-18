@@ -9,6 +9,7 @@
 #' @param method A character string indicating the method to be applied: either "pdp", "pdp+ice", "ice", or "ale"
 #' @param xlabel An optional character vector indicating x-axis label
 #' @param ylabel  An optional character string indicating y-axis label
+#' @param title An optional character string indicating the title of the plot
 #' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
 #' @param nCol An optional numeric entry indicating the number of columns when plots are created for several features
@@ -38,6 +39,7 @@ pdp_ice_ale <- function(pred,
                         method,
                         xlabel = features,
                         ylabel = method,
+                        title = "",
                         center = FALSE,
                         limits = c(NA,NA),
                         nCol = NA,
@@ -98,7 +100,7 @@ pdp_ice_ale <- function(pred,
     nCol <- ceiling(length(features)/2)
   }
   plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
-  plotting <- ggplotify::as.ggplot(plotting)
+  plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title)
   return(plotting)
 }
 

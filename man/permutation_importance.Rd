@@ -9,6 +9,7 @@ permutation_importance(
   type,
   xlabel = "",
   ylabel = type,
+  title = "",
   limits = c(NA, NA)
 )
 }
@@ -20,6 +21,8 @@ permutation_importance(
 \item{xlabel}{An optional character string indicating the x-axis label}
 
 \item{ylabel}{An optional character string indicating the y-axis label}
+
+\item{title}{An optional character string indicating the title of the plot}
 
 \item{limits}{An optional two-entry vector indicating the limits of the y-axis}
 }

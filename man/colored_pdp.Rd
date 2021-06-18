@@ -10,6 +10,7 @@ colored_pdp(
   covar,
   xlabel = feature,
   ylabel = "",
+  title = "",
   legend_title = covar,
   legend_position = "right"
 )
@@ -24,6 +25,8 @@ colored_pdp(
 \item{xlabel}{An optional character string of the same length as the number of feature indicating the x-axis label of the single plots}
 
 \item{ylabel}{An optional character string indicating y-axis label (same for all panels)}
+
+\item{title}{An optional character string indicating the title of the plot}
 
 \item{legend_title}{A character indicating the legend title. Default is the name of 'covar'}
 

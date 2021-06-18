@@ -7,6 +7,7 @@
 #' @param type A character indicating the type of variable importance: model, randomforest, or conditional
 #' @param xlabel An optional character string indicating the x-axis label
 #' @param ylabel An optional character string indicating the y-axis label
+#' @param title An optional character string indicating the title of the plot
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
 #'
 #' @return a plot of type ggplot
@@ -31,6 +32,7 @@ permutation_importance <- function(object,
                                    type,
                                    xlabel = "",
                                    ylabel = type,
+                                   title = "",
                                    limits = c(NA,NA)){
   if(!type %in% c("model-agnostic", "randomforest", "conditional")){
     stop("Please specify the type of permutation importance!", show.error.messages = TRUE)
@@ -53,6 +55,7 @@ permutation_importance <- function(object,
     theme_bw() +
     xlab(xlabel) +
     ylab(ylabel) +
-    ylim(limits)
+    ylim(limits) +
+    ggtitle(title)
   return(featPlot)
 }

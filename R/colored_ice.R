@@ -7,6 +7,7 @@
 #' @param covar A character string indicating the covariate after which the ICE curves should be colored
 #' @param xlabel An optional character string of the same length as the number of features indicating the x-axis label of the single plots
 #' @param ylabel  An optional character string indicating y-axis label (same for all panels)
+#' @param title An optional character string indicating the title of the plot
 #' @param center Logical indicating whether ICE curves should be centered at the minimum. Default is FALSE
 #' @param limits An optional two-entry vector indicating the limits of the y-axis
 #' @param colors An optional vector with entries for each level of 'covar'
@@ -36,6 +37,7 @@ colored_ice <- function(pred,
                         covar,
                         xlabel = features,
                         ylabel = "",
+                        title = "",
                         center = FALSE,
                         limits = c(NA,NA),
                         nCol = NA,
@@ -95,7 +97,7 @@ colored_ice <- function(pred,
     nCol <- ceiling(length(features)/2)
   }
   plotting <- do.call("grid.arrange", c(listPlot, ncol=nCol))
-  plotting <- ggplotify::as.ggplot(plotting)
+  plotting <- ggplotify::as.ggplot(plotting) + ggtitle(title)
   return(plotting)
 }
 
