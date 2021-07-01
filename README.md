@@ -12,7 +12,7 @@ devtools::install_github("mirka-henninger/InterpretationMethods")
 library(InterpretationMethods)
 ```
 
-It uses mostly the functionality of the iml (https://github.com/christophM/iml) and permimp (https://github.com/ddebeer/permimp) package. However, it faciliates the use of the functions and customization of plots for interpretation methods. 
+It uses mostly the functionality of the [iml](https://github.com/christophM/iml) and [permimp](https://github.com/ddebeer/permimp) package. However, it faciliates the use of the functions and customization of plots for interpretation methods. 
 
 - PD, ICE, ALE plots (```pdp_ice_ale```)
 - two dimensional PD and ALE plots (```twoD_pdp_ale```)
