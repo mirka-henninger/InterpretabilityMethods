@@ -28,7 +28,7 @@
 #' pred <- iml::Predictor$new(rfmod)
 #' (twoD_pdPlot <- twoD_pdp_ale(pred, features = c("x1", "x2"), method = "pdp"))
 #' (twoD_alePlot <- twoD_pdp_ale(pred, features = c("x1", "x2"), method = "ale"))
-#'}
+#' }
 #'
 #' @export
 twoD_pdp_ale <- function(pred,
@@ -50,6 +50,21 @@ twoD_pdp_ale <- function(pred,
       geom_raster(data = plotDat, aes(.data[[features[1]]],
                                       .data[[features[2]]],
                                       fill = .data$.value))
+
+    if(is.numeric(pred$data$get.x()[[features[1]]]) | is.numeric(pred$data$get.x()[[features[2]]])){
+      if(rugs == TRUE){
+        plot_2D <- plot_2D +
+          geom_rug(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+                   inherit.aes = F)
+        if(show_data == TRUE){
+          plot_2D <-
+            plot_2D +
+            geom_point(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+                       shape = 1, size = .2,
+                       inherit.aes = F)
+        }
+      }
+    } else warning("Rugs and datapoints are not shown for categorical features")
   }
   if(method == "ale"){
     plot_2D <- ggplot() +
@@ -62,18 +77,23 @@ twoD_pdp_ale <- function(pred,
       plot_2D <- plot_2D +
         scale_x_continuous(breaks = 1:length(levels(pred$data$get.x()[[features[1]]])), labels = levels(pred$data$get.x()[[features[1]]]))
     }
-  }
-  if(rugs == TRUE){
-    plot_2D <- plot_2D +
-      geom_rug(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
-               inherit.aes = F)
-  }
-  if(show_data == TRUE){
-    plot_2D <-
-      plot_2D +
-      geom_point(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
-                 shape = 1, size = .2,
-                 inherit.aes = F)
+    if(!is.numeric(pred$data$get.x()[[features[1]]]) | !is.numeric(pred$data$get.x()[[features[2]]])){
+      warning("Please note that the categorical variable is always displayed on the x-axis, so make sure that it is the first in the features vector")
+    }
+    if(is.numeric(pred$data$get.x()[[features[1]]]) & is.numeric(pred$data$get.x()[[features[2]]])){
+      if(rugs == TRUE){
+        plot_2D <- plot_2D +
+          geom_rug(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+                   inherit.aes = F)
+        if(show_data == TRUE){
+          plot_2D <-
+            plot_2D +
+            geom_point(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+                       shape = 1, size = .2,
+                       inherit.aes = F)
+        }
+      }
+    } else warning("Rugs and datapoints are not shown when at least one categorical feature is involved in ALE")
   }
   plot_2D <-
     plot_2D +
