@@ -39,8 +39,11 @@ colored_pdp <- function(pred,
   emptyPlot <- ggplot2::ggplot()
   listPlot <- list(emptyPlot)
   # build plot dat
-  tempPlot <- iml::FeatureEffect$new(pred, feature = c(feature, covar), method = "pdp")
-  plotDat <- tempPlot$results
+  tempDat <- iml::FeatureEffect$new(pred, feature = c(feature, covar), method = "pdp")
+  plotDat <- tempDat$results
+  if(".class" %in% names(plotDat)){
+    plotDat <- plotDat[plotDat$.class==1,]
+  }
 
   # plot
   tempPlot <- ggplot2::ggplot(plotDat, aes(x=.data[[feature]], y=.data$.value,
