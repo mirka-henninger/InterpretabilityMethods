@@ -1,5 +1,5 @@
-Package: InterpretationMethods
-Title: Facilitates the implementation of interpretation methods for social science research
+Package: InterpretableML
+Title: Facilitates the implementation of interpretation techniques for social science research
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Mirka",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "mail@mimrka-henninger.de",
            comment = c(ORCID = "0000-0003-4676-2361"))
-Description: Facilitates the implementation of interpretation methods for social science researchers. The packages uses functions for interpretability methods from the packages 'iml' and 'permimp'. 
+Description: Facilitates the implementation of interpretation techniques for social science researchers. The packages uses functions for interpretation techniques from the packages 'iml' and 'permimp'. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

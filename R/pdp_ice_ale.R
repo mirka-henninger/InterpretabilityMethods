@@ -50,12 +50,17 @@ pdp_ice_ale <- function(pred,
   for (nfeat in 1:length(features)){
     # build plot dat
     feature <- features[nfeat]
-    tempPlot <- iml::FeatureEffect$new(pred, feature = feature, method = method)
+    if(center == FALSE){
+      tempPlot <- iml::FeatureEffect$new(pred, feature = feature, method = method)
+    }
     if(center == TRUE){
       tempPlot <- iml::FeatureEffect$new(pred, feature = feature, method = method,
                                          center.at = min(pred$data$X[[feature]]))
     }
     plotDat <- tempPlot$results
+    if(".class" %in% names(plotDat)){
+      plotDat <- plotDat[plotDat$.class==1,]
+    }
     # optional sampling
     if(method == "ice" | method == "pdp+ice"){
       samp <- c(sample(1:nrow(plotDat), nrow(plotDat) * sample_prop, replace = FALSE), NA)
