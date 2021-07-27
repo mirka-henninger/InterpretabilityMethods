@@ -7,6 +7,7 @@
 permutation_importance(
   object,
   type,
+  loss = NULL,
   xlabel = "",
   ylabel = type,
   title = "",
@@ -16,7 +17,9 @@ permutation_importance(
 \arguments{
 \item{object}{A prediction object from package iml for model-based permutation importance or an object as returned by randomForest or cforest}
 
-\item{type}{A character indicating the type of variable importance: model, randomforest, or conditional}
+\item{type}{A character indicating the type of variable importance: model-agnostic, randomforest, or conditional}
+
+\item{loss}{A character specifying the loss function for type = model-agnostic. See ?iml::FeatureImp for more details}
 
 \item{xlabel}{An optional character string indicating the x-axis label}
 
@@ -43,7 +46,7 @@ y <- 5 + 5 * x1 + 5 * x2 + 0 * x3 + rnorm(N,1)
 dat <- data.frame(x1,x2,x3,y)
 rfmod <- randomForest::randomForest(y~., dat)
 pred <- iml::Predictor$new(rfmod)
-permutation_importance(pred, type = "model-agnostic", limits = c(0,18))
+permutation_importance(pred, type = "model-agnostic", limits = c(0,18), loss = "mse")
 permutation_importance(rfmod, type = "randomforest", limits = c(0,18))
 permutation_importance(rfmod, type = "conditional", limits = c(0,18))
 }

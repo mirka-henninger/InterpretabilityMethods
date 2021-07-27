@@ -23,7 +23,7 @@
 #' dat <- data.frame(x1,x2,x3,y)
 #' rfmod <- randomForest::randomForest(y~., dat)
 #' pred <- iml::Predictor$new(rfmod)
-#' permutation_importance(pred, type = "model-agnostic", limits = c(0,18))
+#' permutation_importance(pred, type = "model-agnostic", limits = c(0,18), loss = "mse")
 #' permutation_importance(rfmod, type = "randomforest", limits = c(0,18))
 #' permutation_importance(rfmod, type = "conditional", limits = c(0,18))
 #'}
