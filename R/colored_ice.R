@@ -54,15 +54,17 @@ colored_ice <- function(pred,
   for (nfeat in 1:length(features)){
     # build plot dat
     feature <- features[nfeat]
-    tempPlot <- iml::FeatureEffect$new(pred, feature = feature, method = "ice")
+    tempDat <- iml::FeatureEffect$new(pred, feature = feature, method = "ice")
     if(center == TRUE){
-      tempPlot <- iml::FeatureEffect$new(pred, feature = feature, method = "ice",
+      tempDat <- iml::FeatureEffect$new(pred, feature = feature, method = "ice",
                                          center = min(pred$data$X[[feature]]))
     }
 
-    plotDat <- tempPlot$results
-    names(plotDat) <- c(features[nfeat], "yhat","type","id")
-    plotDat$id <- as.character(plotDat$id)
+    plotDat <- tempDat$results
+    if(".class" %in% names(plotDat)){
+      stop("ICE plots are not yet implemented for categorical outcomes")
+    }
+    plotDat$id <- as.character(plotDat$.id)
 
     # merge X dat with plot dat
     plotDat <- dplyr::left_join(plotDat, dat, by = "id")
@@ -71,8 +73,8 @@ colored_ice <- function(pred,
     # plot
     tempPlot <- ggplot2::ggplot(plotDat,
                                 aes(x=.data[[features[nfeat]]],
-                                    y=.data$yhat,
-                                    group = .data$id,
+                                    y=.data$.value,
+                                    group = .data$.id,
                                     color = .data[[covarName]])) +
       # geom_point(alpha = alpha) +
       geom_line(alpha = alpha) +
