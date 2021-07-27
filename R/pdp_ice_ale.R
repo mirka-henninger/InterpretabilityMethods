@@ -59,6 +59,7 @@ pdp_ice_ale <- function(pred,
     }
     plotDat <- tempPlot$results
     if(".class" %in% names(plotDat)){
+      if(method == "ice") stop("ICE plots are not yet implemented for categorical outcomes")
       plotDat <- plotDat[plotDat$.class==1,]
     }
     # optional sampling
