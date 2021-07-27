@@ -45,6 +45,7 @@ colored_pdp <- function(pred,
   # plot
   tempPlot <- ggplot2::ggplot(plotDat, aes(x=.data[[feature]], y=.data$.value,
                                            color = .data[[covar]])) +
+    geom_point() +
     geom_line()
   plotting <- tempPlot +
     theme_bw() +
