@@ -4,7 +4,8 @@
 #' Three types are implemented: model-based permutation importance, random forest permutation importnance or conditional random forest variable importance
 #'
 #' @param object A prediction object from package iml for model-based permutation importance or an object as returned by randomForest or cforest
-#' @param type A character indicating the type of variable importance: model, randomforest, or conditional
+#' @param type A character indicating the type of variable importance: model-agnostic, randomforest, or conditional
+#' @param loss A character specifying the loss function for type = model-agnostic. See ?iml::FeatureImp for more details
 #' @param xlabel An optional character string indicating the x-axis label
 #' @param ylabel An optional character string indicating the y-axis label
 #' @param title An optional character string indicating the title of the plot
@@ -30,6 +31,7 @@
 #' @export
 permutation_importance <- function(object,
                                    type,
+                                   loss = NULL,
                                    xlabel = "",
                                    ylabel = type,
                                    title = "",
@@ -38,7 +40,8 @@ permutation_importance <- function(object,
     stop("Please specify the type of permutation importance!", show.error.messages = TRUE)
   }
   if(type == "model-agnostic"){
-    temp <- iml::FeatureImp$new(object, loss = "mse", compare = "difference")$results
+    if(is.null(loss)) stop("Please indicate the desired loss function!")
+    temp <- iml::FeatureImp$new(object, loss = loss, compare = "difference")$results
   }
   if(type == "randomforest"){
     temp <- permimp::permimp(object, do_check = FALSE, conditional = FALSE)
@@ -55,7 +58,9 @@ permutation_importance <- function(object,
     theme_bw() +
     xlab(xlabel) +
     ylab(ylabel) +
-    ylim(limits) +
     ggtitle(title)
+  if (!all(is.na(limits))){
+    featPlot <- featPlot + ylim(limits)
+  }
   return(featPlot)
 }
