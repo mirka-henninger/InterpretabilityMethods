@@ -1,6 +1,6 @@
-# InterpretationMethods
+# InterpretableML
 
-This repository facilitates the use of interpretation methods for black-box machine learning models. Most of the functions are wrapper functions based on the R package *iml* and *permimp*. 
+This repository facilitates the use of interpretation techniques for black-box machine learning methods. Most of the functions are wrapper functions based on the R package *iml* and *permimp*. 
 
 
 It can be installed like an R package using the devtools-package:
@@ -8,11 +8,11 @@ It can be installed like an R package using the devtools-package:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("mirka-henninger/InterpretationMethods")
-library(InterpretationMethods)
+devtools::install_github("mirka-henninger/InterpretableML")
+library(InterpretableML)
 ```
 
-It uses mostly the functionality of the [iml](https://github.com/christophM/iml) and [permimp](https://github.com/ddebeer/permimp) package. However, it faciliates the use of the functions and customization of plots for interpretation methods. 
+It uses mostly the functionality of the [iml](https://github.com/christophM/iml) and [permimp](https://github.com/ddebeer/permimp) package. However, it faciliates the use of the functions and customization of plots for interpretation techniques. 
 
 - PD, ICE, ALE plots (```pdp_ice_ale```)
 - two dimensional PD and ALE plots (```twoD_pdp_ale```)
