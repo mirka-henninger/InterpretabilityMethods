@@ -51,13 +51,13 @@ pdp_ice_ale <- function(pred,
     # build plot dat
     feature <- features[nfeat]
     if(center == FALSE){
-      tempPlot <- iml::FeatureEffect$new(pred, feature = feature, method = method)
+      tempDat <- iml::FeatureEffect$new(pred, feature = feature, method = method)
     }
     if(center == TRUE){
-      tempPlot <- iml::FeatureEffect$new(pred, feature = feature, method = method,
+      tempDat <- iml::FeatureEffect$new(pred, feature = feature, method = method,
                                          center.at = min(pred$data$X[[feature]]))
     }
-    plotDat <- tempPlot$results
+    plotDat <- tempDat$results
     if(".class" %in% names(plotDat)){
       if(method == "ice") stop("ICE plots are not yet implemented for categorical outcomes")
       plotDat <- plotDat[plotDat$.class==1,]
