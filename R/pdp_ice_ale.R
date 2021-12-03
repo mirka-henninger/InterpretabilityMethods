@@ -29,6 +29,7 @@
 #' pred <- iml::Predictor$new(rfmod)
 #' pdp <- pdp_ice_ale(pred,  "x1", method = "pdp")
 #' ice <- pdp_ice_ale(pred,  "x1", method = "ice")
+#' pdp_ice <- pdp_ice_ale(pred,  "x1", method = "pdp+ice")
 #' ale <- pdp_ice_ale(pred,  c("x1", "x2"), method = "ale", ylabel = "ALE")
 #'}
 #'
@@ -74,7 +75,7 @@ pdp_ice_ale <- function(pred,
                              color = .data$.type)) +
         # geom_point() +
         geom_line() +
-        scale_color_manual(values = c("#344037", "gold")) +
+        scale_color_manual(values = c("#86998b", "#274e13")) +
         scale_alpha_manual(values = c(alpha, 1)) +
         scale_size_manual(values = c(.5,2))
     }
