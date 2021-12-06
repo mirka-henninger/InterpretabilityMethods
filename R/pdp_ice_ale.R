@@ -75,7 +75,7 @@ pdp_ice_ale <- function(pred,
                              color = .data$.type)) +
         # geom_point() +
         geom_line() +
-        scale_color_manual(values = c("#4c8bbe", "#000000")) +
+        scale_color_manual(values = c("#2C738EFF", "#000000")) +
         scale_alpha_manual(values = c(alpha, 1)) +
         scale_size_manual(values = c(.5,2))
     }
