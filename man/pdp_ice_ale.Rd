@@ -59,8 +59,8 @@ dat <- data.frame(x1,x2,y)
 rfmod <- randomForest::randomForest(y~., dat)
 pred <- iml::Predictor$new(rfmod)
 pdp <- pdp_ice_ale(pred,  "x1", method = "pdp")
-ice <- pdp_ice_ale(pred,  "x1", method = "ice")
-pdp_ice <- pdp_ice_ale(pred,  "x1", method = "pdp+ice")
+ice <- pdp_ice_ale(pred,  "x1", method = "ice", alpha = .1)
+pdp_ice <- pdp_ice_ale(pred,  "x1", method = "pdp+ice", alpha = .2)
 ale <- pdp_ice_ale(pred,  c("x1", "x2"), method = "ale", ylabel = "ALE")
 }
 

@@ -28,8 +28,8 @@
 #' rfmod <- randomForest::randomForest(y~., dat)
 #' pred <- iml::Predictor$new(rfmod)
 #' pdp <- pdp_ice_ale(pred,  "x1", method = "pdp")
-#' ice <- pdp_ice_ale(pred,  "x1", method = "ice")
-#' pdp_ice <- pdp_ice_ale(pred,  "x1", method = "pdp+ice")
+#' ice <- pdp_ice_ale(pred,  "x1", method = "ice", alpha = .1)
+#' pdp_ice <- pdp_ice_ale(pred,  "x1", method = "pdp+ice", alpha = .2)
 #' ale <- pdp_ice_ale(pred,  c("x1", "x2"), method = "ale", ylabel = "ALE")
 #'}
 #'
@@ -67,24 +67,25 @@ pdp_ice_ale <- function(pred,
     if(method == "ice" | method == "pdp+ice"){
       samp <- c(sample(1:nrow(plotDat), nrow(plotDat) * sample_prop, replace = FALSE), NA)
       plotDat <- plotDat[plotDat$.id %in% samp,]
+      plotDat$alpha <- ifelse(plotDat$.type == "ice", alpha, 1)
       tempPlot <- ggplot(plotDat,
                          aes(x = .data[[feature]],
                              y = .data$.value,
                              group = .data$.id,
                              size = .data$.type,
-                             color = .data$.type)) +
-        # geom_point() +
+                             color = .data$.type,
+                             alpha = .data$.type)) +
         geom_line() +
+        scale_size_manual(values = c(.5,2)) +
         scale_color_manual(values = c("#2C738EFF", "#000000")) +
-        scale_alpha_manual(values = c(alpha, 1)) +
-        scale_size_manual(values = c(.5,2))
+        scale_alpha_manual(values = c(alpha,1))
     }
     if(method != "ice" & method != "pdp+ice"){
       tempPlot <- ggplot(plotDat,
                          aes(x = .data[[feature]],
                              y = .data$.value)) +
         geom_point() +
-        geom_line(alpha = alpha)
+        geom_line()
     }
     # plot
     listPlot[[nfeat]] <- tempPlot
