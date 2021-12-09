@@ -35,16 +35,17 @@ titanic$Sex <- factor(titanic$Sex)
 features <- c("Fare", "Pclass", "Age", "Survived")
 dat <- titanic[, features]
 
-# 
-RF <- randomForest::randomForest(Fare ~ Pclass + Age + Survived,
+# fit conditional inference forest
+cforest_fit <- partykit::cforest(Fare ~ Pclass + Age + Survived,
                                  data = dat, mtry = 2)
 
-pred <- iml::Predictor$new(RF)
+X   <- dat[which(names(dat) != "y")]
+pred <- iml::Predictor$new(cforest_fit,data = X, y = dat$y)
 
 # PDP, ICE, and ALE
-pdp <- pdp_ice_ale(pred,  c("Pclass","Age", "Survived"), method = "pdp")
-ice <- pdp_ice_ale(pred,  c("Pclass","Age", "Survived"), method = "ice")
-ale <- pdp_ice_ale(pred,  c("Pclass","Age", "Survived"), method = "ale")
+pdp <- pdp_ice_ale(pred, c("Pclass","Age", "Survived"), method = "pdp")
+ice <- pdp_ice_ale(pred, c("Pclass","Age", "Survived"), method = "ice")
+ale <- pdp_ice_ale(pred, c("Pclass","Age", "Survived"), method = "ale")
 
 # two-dimensional PD and ALE
 twoD_pdp_ale(pred, c("Age", "Pclass"), method = "pdp")
@@ -56,10 +57,8 @@ colored_pdp(pred, "Age", "Pclass")
 colored_ice(pred, "Age", "Pclass")
 colored_ice(pred, "Age", "Pclass", center = TRUE)
 
-# three types of permutation importance
+# permutation importance
 permutation_importance(pred, type = "model-agnostic", loss = "mse")
-permutation_importance(RF, type = "randomforest")
-permutation_importance(RF, type = "conditional")
 
 # overall and two-way interaction statistic
 interaction_statistic(pred)
