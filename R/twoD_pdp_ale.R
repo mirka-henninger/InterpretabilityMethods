@@ -54,7 +54,8 @@ twoD_pdp_ale <- function(pred,
     if(is.numeric(pred$data$get.x()[[features[1]]]) | is.numeric(pred$data$get.x()[[features[2]]])){
       if(rugs == TRUE){
         plot_2D <- plot_2D +
-          geom_rug(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+          geom_rug(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]],
+                       col = "grey"),
                    inherit.aes = F)
         if(show_data == TRUE){
           plot_2D <-
@@ -83,7 +84,8 @@ twoD_pdp_ale <- function(pred,
     if(is.numeric(pred$data$get.x()[[features[1]]]) & is.numeric(pred$data$get.x()[[features[2]]])){
       if(rugs == TRUE){
         plot_2D <- plot_2D +
-          geom_rug(aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
+          geom_rug(alpha = .1,
+                   aes(pred$data$get.x()[[features[1]]], pred$data$get.x()[[features[2]]]),
                    inherit.aes = F)
         if(show_data == TRUE){
           plot_2D <-
