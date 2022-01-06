@@ -39,7 +39,7 @@ dat <- titanic[, features]
 cforest_fit <- partykit::cforest(Fare ~ Pclass + Age + Survived,
                                  data = dat, mtry = 2)
 
-X   <- dat[which(names(dat) != "y")]
+X   <- dat[which(names(dat) != "Fare")]
 pred <- iml::Predictor$new(cforest_fit,data = X, y = dat$y)
 
 # PDP, ICE, and ALE
